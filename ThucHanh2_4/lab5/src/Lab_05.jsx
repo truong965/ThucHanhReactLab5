@@ -9,26 +9,12 @@ const Lab_05 = () => {
             <div className="row-span-3 col-span-1 border border-2">
                 <div className="grid grid-cols-1 gap-2">
                     <img src="../src/FEData/logo2.png" alt="error" />
-                    <NavLink to="/dashboard" className="nav-link" >
-                        Dashboar
-                    </NavLink>
-                    <NavLink to="/project" className="nav-link" >
-                        Project
-                    </NavLink>
-                    <NavLink to="/theme" className="nav-link"  >
-                        Theme
-                    </NavLink>
-                    <NavLink to="/analytics" className="nav-link" >
-                        Analytics
-                    </NavLink>
-                    <NavLink to="/messages" className="nav-link"  >
-                        Messages
-                    </NavLink>
-                    <NavLink
-                        to="/integrations"
-                        className="nav-link" >
-                        Integrations
-                    </NavLink>
+                    <NavLink to="/dashboard" className="nav-link" >Dashboar</NavLink>
+                    <NavLink to="/project" className="nav-link" >Project </NavLink>
+                    <NavLink to="/theme" className="nav-link"  > Theme</NavLink>
+                    <NavLink to="/analytics" className="nav-link" > Analytics</NavLink>
+                    <NavLink to="/messages" className="nav-link"  >  Messages</NavLink>
+                    <NavLink to="/integrations" className="nav-link" >Integrations </NavLink>
                     <div style={{ backgroundColor: "#f0f6ff" }} className="flex flex-col justify-content-center align-items-center">
                         <img src="../src/FEData/v2.png" alt="error" />
                         <h2>V2.0 is available</h2>
@@ -38,9 +24,7 @@ const Lab_05 = () => {
                     </div>
                 </div>
             </div>
-            <div className="row-span-3 col-span-3 ">
-                <Outlet />
-            </div>
+            <div className="row-span-3 col-span-3 "> <Outlet /></div>
         </div>
     )
 }
