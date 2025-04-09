@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+
 // const [preview, setPreview] = useState < string | null > (null);
 
 
@@ -30,8 +32,14 @@ import React, { useEffect, useState } from 'react';
               </div> */}
 
 {/* Name Input */ }
-const CustomerModal = ({ isOpen, onClose, onSubmit, data }) => {
-  const [formData, setFormData] = useState(data);
+const CustomerModal = ({ isOpen, onClose, onSubmit, id }) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    company: "",
+    orderValue: "",
+    orderDate: "",
+    status: "New",
+  });
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -59,26 +67,31 @@ const CustomerModal = ({ isOpen, onClose, onSubmit, data }) => {
       status: "New",
     });
   };
-  const convertToDateInputFormat = (dateString) => {
-    if (!dateString) return ''; // Return an empty string if the dateString is undefined or falsy
-
-    const [day, month, year] = dateString.split('/'); // Split the string by "/"
-
-    if (!day || !month || !year) return ''; // Check if the split operation worked correctly
-
-    const formattedDate = new Date(`${year}-${month}-${day}`).toISOString().split('T')[0]; // Convert to "yyyy-MM-dd"
-    return formattedDate;
-  };
+  function convertToDateInputFormat(isoDateString) {
+    const date = new Date(isoDateString);
+    return date.toISOString().split('T')[0]; // Get 'YYYY-MM-DD'
+  }
 
 
   useEffect(() => {
-    if (data) {
-      data.orderDate = convertToDateInputFormat(data.orderDate); // Convert the date format for the input field
-      setFormData(data); // Set the form data when the modal opens
+    if (id) {
+      axios.get("https://67f5ddfa913986b16fa5c168.mockapi.io/admin/Report") // Fetch customer data from the API
+        .then((response) => {
+          const data = response.data; // Get the data from the response
+          if (!Array.isArray(data)) {
+            console.error("API không trả về mảng:", data);
+            return;
+          }
+          const customerData = data.find((customer) => customer.id === id); // Find the customer by ID
+          if (!customerData) return; // If no customer found, do nothing
+          customerData.orderDate = convertToDateInputFormat(customerData.orderDate); // Convert date format for input
+          console.log("Customer data:", customerData); // Log the customer data
+          setFormData(customerData); // Set the form data when the modal opens
+        });
     }
-    console.log("Form data updated:", data); // Log the updated form data
+    console.log("Form data updated:", id); // Log the updated form data
   }
-    , [data, isOpen]); // Update when data or isOpen changes
+    , [id, isOpen]); // Update when data or isOpen changes
   return (
     <div className="">
       {
