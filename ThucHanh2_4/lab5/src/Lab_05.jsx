@@ -71,6 +71,109 @@ const Dashboard = () => {
             return "#f1f8fd"
         }
     }
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+    const handleFormSubmit = (data) => {
+        if (customers.find(customer => customer.name === data.name)) {
+            alert("Customer already exists!");
+            return;
+        }
+        data.img = '../src/FEData/Avatar (1).png'; // Set a default image or handle it as needed
+        setCustomers((prevCustomers) => [...prevCustomers, data]);
+        axios.post('https://67f5ddfa913986b16fa5c168.mockapi.io/admin/Report', data)
+            .then((response) => {
+
+                console.log('Customer added:', response.data);
+            }).catch((error) => {
+                console.error('Error adding customer:', error);
+            });
+        closeModal();
+    };
+    const [selectedCutomer, setSelectedCustomer] = useState({
+        name: '', // default empty string
+        company: '',
+        orderValue: '',
+        orderDate: '',
+        status: 'New', // default status});
+    });
+    const handleCustomerClick = (customer) => {
+        setSelectedCustomer(customer);
+        openModal();
+    }
+    const [customers, setCustomers] = useState([
+        {
+            name: 'Elizabeth Lee',
+            company: 'AvatarSystems',
+            orderValue: '$359',
+            orderDate: '10/07/2023',
+            status: 'New',
+            avatar: '../src/FEData/Avatar (1).png',
+        },
+    ]);
+    const formatDate = (dateString) => {
+        const date = new Date(dateString); // Convert the string to a Date object
+        const day = date.getDate().toString().padStart(2, '0'); // Ensure 2-digit day
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Get month and ensure 2-digit format
+        const year = date.getFullYear(); // Get the year
+        return `${day}/${month}/${year}`; // Format as dd/MM/yyyy
+    };
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'New':
+                return 'bg-blue-100 text-blue-600';
+            case 'In Progress':
+                return 'bg-yellow-100 text-yellow-600';
+            case 'Completed':
+                return 'bg-green-100 text-green-600';
+            default:
+                return '';
+        }
+    };
+    const [currentPage, setCurrentPage] = useState(1);
+    const numberItemsPerPage = 5;
+    const firstIndexOfPage = 1;
+    const totalPages = Math.ceil(customers.length / numberItemsPerPage);
+    const currentPageData = useMemo(() => {
+        const startIndex = (currentPage - 1) * numberItemsPerPage;
+        const endIndex = startIndex + numberItemsPerPage;
+        return customers.slice(startIndex, endIndex);
+    }, [customers, currentPage, numberItemsPerPage]);
+
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+    useEffect(() => {
+        axios
+            .get('https://67f5ddfa913986b16fa5c168.mockapi.io/admin/Report')
+            .then((response) => {
+                const updatedCustomers = response.data.map((customer) => {
+                    // Chọn ngẫu nhiên một status
+                    const statuses = ['New', 'In Progress', 'Completed'];
+                    const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+                    // Kiểm tra tính hợp lệ của orderDate trước khi chuyển đổi
+                    let formattedOrderDate = formatDate(customer.orderDate);
+
+                    // Cập nhật status cho customer
+                    return { ...customer, status: randomStatus, orderDate: formattedOrderDate };
+                });
+                setCustomers(updatedCustomers);
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
     return (
         <>
             <div>
@@ -96,11 +199,8 @@ const Dashboard = () => {
                 <div className="mt-2 shadow-lg">
                     <div className="flex justify-start mt-2">
                         <span className="ms-3 me-auto font-bold text-2xl">Detail report</span>
-                        <button className="bg-white! border-4! border-red-200! flex items-center gap-2 px-3 py-1 rounded me-2"><img src="../src/FEData/Download.png" alt="err" /> Import</button>
+                        <button className="bg-white! border-4! border-red-200! flex items-center gap-2 px-3 py-1 rounded me-2"><img src="../src/FEData/Download.png" alt="err" onClick={openModal} /> Import</button>
                         <button className="bg-white! border-4! border-red-200!  flex items-center gap-2 px-3 py-1 rounded"><img src="../src/FEData/Move up.png" alt="err" /> Export</button>
-
-                        {/* <button style={{ borderColor: '#fef0f5' }} className="bg-white border border-2  flex items-center gap-2 px-3 py-1 rounded me-2" onClick={openModal} ><img src="../src/FEData/Download.png" alt="err" /> Import</button> */}
-                        {/* <button style={{ borderColor: '#fef0f5' }} className="bg-white border border-2  flex items-center gap-2 px-3 py-1 rounded"><img src="../src/FEData/Move up.png" alt="err" /> Export</button> */}
                         {/* <CustomerModal isOpen={isModalOpen} onClose={closeModal} onSubmit={handleFormSubmit} data={selectedCutomer} /> */}
                     </div>
                     <div className="overflow-x-auto p-4">
@@ -119,52 +219,30 @@ const Dashboard = () => {
                                 </tr>
                             </thead>
                             <tbody className="text-sm divide-y divide-gray-200">
-                                <tr className="hover:bg-gray-50">
-                                    <td className="py-1">
-                                        <input type="checkbox" />
-                                    </td>
-                                    <td className="flex items-center px-1 py-1">
-                                        <img src="../src/FEData/Avatar (1).png" alt="err" className="w-8 h-8 rounded-full" />
-                                        <span className="font-semibold text-gray-800 ms-1">Truong</span>
-                                    </td>
-                                    <td className="text-start px-1 py-3 text-gray-700">Truong</td>
-                                    <td className="px-1 py-3 text-gray-700">Truong</td>
-                                    <td className="px-1 py-3 text-gray-700">Truong</td>
-                                    <td className="px-1 py-1">
-                                        <span
-                                            className={`text-xs px-2 py-2 rounded-full`}
-                                        >
-                                            New
-                                        </span>
-                                    </td>
-                                    <td className="px-1 py-1">
-                                        <button className="bg-white! border border-2 border-black!" title="Edit" >✏️</button>
-                                    </td>
-                                </tr>
-                                {/* {currentPageData.map((cust, idx) => (
-                                          <tr key={idx} className="hover:bg-gray-50">
-                                                <td className="py-1">
-                                                      <input type="checkbox" />
-                                                </td>
-                                                <td className="flex items-center px-1 py-1">
-                                                      <img src={cust.avatar} alt={cust.name} className="w-8 h-8 rounded-full" />
-                                                      <span className="font-semibold text-gray-800 ms-1">{cust.name}</span>
-                                                </td>
-                                                <td className="text-start px-1 py-3 text-gray-700">{cust.company}</td>
-                                                <td className="px-1 py-3 text-gray-700">{cust.orderValue}</td>
-                                                <td className="px-1 py-3 text-gray-700">{cust.orderDate}</td>
-                                                <td className="px-1 py-1">
-                                                      <span
-                                                            className={`text-xs px-2 py-2 rounded-full ${getStatusColor(cust.status)}`}
-                                                      >
-                                                            {cust.status}
-                                                      </span>
-                                                </td>
-                                                <td className="px-1 py-1">
-                                                      <button className="bg-white border border-2" title="Edit" onClick={() => handleCustomerClick(cust)} >✏️</button>
-                                                </td>
-                                          </tr>
-                                    ))} */}
+                                {currentPageData.map((cust, idx) => (
+                                    <tr key={idx} className="hover:bg-gray-50">
+                                        <td className="py-1">
+                                            <input type="checkbox" />
+                                        </td>
+                                        <td className="flex items-center px-1 py-1">
+                                            <img src={cust.avatar} alt={cust.name} className="w-8 h-8 rounded-full" />
+                                            <span className="font-semibold text-gray-800 ms-1">{cust.name}</span>
+                                        </td>
+                                        <td className="text-start px-1 py-3 text-gray-700">{cust.company}</td>
+                                        <td className="px-1 py-3 text-gray-700">{cust.orderValue}</td>
+                                        <td className="px-1 py-3 text-gray-700">{cust.orderDate}</td>
+                                        <td className="px-1 py-1">
+                                            <span
+                                                className={`text-xs px-2 py-2 rounded-full ${getStatusColor(cust.status)}`}
+                                            >
+                                                {cust.status}
+                                            </span>
+                                        </td>
+                                        <td className="px-1 py-1">
+                                            <button className="bg-white! border border-2 border-black!" title="Edit" onClick={() => handleCustomerClick(cust)} >✏️</button>
+                                        </td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>
