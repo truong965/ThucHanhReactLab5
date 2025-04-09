@@ -45,6 +45,32 @@ const Lab_05 = () => {
     )
 }
 const Dashboard = () => {
+    const [overView, setOverView] = useState([{
+        id: 1,
+        name: "Turnover",
+        price: 92405,
+        percent: 5.39,
+
+    }]);
+    useEffect(() => {
+        axios.get("https://67f5ddfa913986b16fa5c168.mockapi.io/admin/OverView")
+            .then((res) => {
+                setOverView(res.data);
+                console.log("load successfully")
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
+    const getColorOverView = (index) => {
+        if (index == 0) {
+            return "#fef0f5"
+        } else if (index == 1) {
+            return "#f0f6ff"
+        } else {
+            return "#f1f8fd"
+        }
+    }
     return (
         <>
             <div>
@@ -53,17 +79,18 @@ const Dashboard = () => {
                 </div>
                 <hr />
                 <div className="border boder-2 my-5">
-                    <h1> overView</h1>
+                    <h1>overview</h1>
                     <div className="grid grid-cols-3 gap-2">
-                        <div className="border boder-2 p-3" >
-                            <h1>total</h1>
-                        </div>
-                        <div className="border boder-2 p-3" >
-                            <h1>total</h1>
-                        </div>
-                        <div className="border boder-2 p-3" >
-                            <h1>total</h1>
-                        </div>
+                        {overView.map((item, index) => (
+                            <div key={index} style={{ backgroundColor: getColorOverView(index) }} className="flex justify-between border border-2 p-3">
+                                <div style={{ backgroundColor: getColorOverView(index) }} className="flex flex-col">
+                                    <h6 className="text-start">{item.name}</h6>
+                                    <h2 className="text-start text-2xl font-bold">{item.price}{index != 2 ? "$" : ""}</h2>
+                                    <span className="text-start text-green-500">{item.percent}%<span className="text-black"> period of change</span> </span>
+                                </div>
+                                <img style={{ backgroundColor: getColorOverView(index) }} className="self-start" src={item.image} alt="err" />
+                            </div>
+                        ))}
                     </div>
                 </div>
                 <div className="border boder-2 h-100" >
