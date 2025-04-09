@@ -93,8 +93,107 @@ const Dashboard = () => {
                         ))}
                     </div>
                 </div>
-                <div className="border boder-2 h-100" >
-                    <h1>detail report</h1>
+                <div className="mt-2 shadow-lg">
+                    <div className="flex justify-start mt-2">
+                        <span className="ms-3 me-auto font-bold text-2xl">Detail report</span>
+                        <button className="bg-white! border-4! border-red-200! flex items-center gap-2 px-3 py-1 rounded me-2"><img src="../src/FEData/Download.png" alt="err" /> Import</button>
+                        <button className="bg-white! border-4! border-red-200!  flex items-center gap-2 px-3 py-1 rounded"><img src="../src/FEData/Move up.png" alt="err" /> Export</button>
+
+                        {/* <button style={{ borderColor: '#fef0f5' }} className="bg-white border border-2  flex items-center gap-2 px-3 py-1 rounded me-2" onClick={openModal} ><img src="../src/FEData/Download.png" alt="err" /> Import</button> */}
+                        {/* <button style={{ borderColor: '#fef0f5' }} className="bg-white border border-2  flex items-center gap-2 px-3 py-1 rounded"><img src="../src/FEData/Move up.png" alt="err" /> Export</button> */}
+                        {/* <CustomerModal isOpen={isModalOpen} onClose={closeModal} onSubmit={handleFormSubmit} data={selectedCutomer} /> */}
+                    </div>
+                    <div className="overflow-x-auto p-4">
+                        <table className="min-w-full border rounded-lg overflow-hidden">
+                            <thead className="bg-gray-100 text-gray-600 text-sm">
+                                <tr>
+                                    <th className="bg-white text-left px-4 py-3">
+                                        <input type="checkbox" />
+                                    </th>
+                                    <th className="text-left px-4 py-3">Customer Name</th>
+                                    <th className="text-left px-4 py-3">Company</th>
+                                    <th className="text-left px-4 py-3">Order Value</th>
+                                    <th className="text-left px-4 py-3">Order Date</th>
+                                    <th className="text-left px-4 py-3">Status</th>
+                                    <th className="text-left px-4 py-3"></th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-sm divide-y divide-gray-200">
+                                <tr className="hover:bg-gray-50">
+                                    <td className="py-1">
+                                        <input type="checkbox" />
+                                    </td>
+                                    <td className="flex items-center px-1 py-1">
+                                        <img src="../src/FEData/Avatar (1).png" alt="err" className="w-8 h-8 rounded-full" />
+                                        <span className="font-semibold text-gray-800 ms-1">Truong</span>
+                                    </td>
+                                    <td className="text-start px-1 py-3 text-gray-700">Truong</td>
+                                    <td className="px-1 py-3 text-gray-700">Truong</td>
+                                    <td className="px-1 py-3 text-gray-700">Truong</td>
+                                    <td className="px-1 py-1">
+                                        <span
+                                            className={`text-xs px-2 py-2 rounded-full`}
+                                        >
+                                            New
+                                        </span>
+                                    </td>
+                                    <td className="px-1 py-1">
+                                        <button className="bg-white! border border-2 border-black!" title="Edit" >✏️</button>
+                                    </td>
+                                </tr>
+                                {/* {currentPageData.map((cust, idx) => (
+                                          <tr key={idx} className="hover:bg-gray-50">
+                                                <td className="py-1">
+                                                      <input type="checkbox" />
+                                                </td>
+                                                <td className="flex items-center px-1 py-1">
+                                                      <img src={cust.avatar} alt={cust.name} className="w-8 h-8 rounded-full" />
+                                                      <span className="font-semibold text-gray-800 ms-1">{cust.name}</span>
+                                                </td>
+                                                <td className="text-start px-1 py-3 text-gray-700">{cust.company}</td>
+                                                <td className="px-1 py-3 text-gray-700">{cust.orderValue}</td>
+                                                <td className="px-1 py-3 text-gray-700">{cust.orderDate}</td>
+                                                <td className="px-1 py-1">
+                                                      <span
+                                                            className={`text-xs px-2 py-2 rounded-full ${getStatusColor(cust.status)}`}
+                                                      >
+                                                            {cust.status}
+                                                      </span>
+                                                </td>
+                                                <td className="px-1 py-1">
+                                                      <button className="bg-white border border-2" title="Edit" onClick={() => handleCustomerClick(cust)} >✏️</button>
+                                                </td>
+                                          </tr>
+                                    ))} */}
+                            </tbody>
+                        </table>
+                    </div>
+                    {/* <div className="flex justify-content-center align-items-center gap-2 mt-2">
+                        <span className="ms-3 me-auto">Total result: {customers.length}</span>
+                        <div className="flex justify-content-center align-items-center gap-2 mt-2">
+                            <button className="bg-transparent" onClick={handlePrevPage} disabled={currentPage === firstIndexOfPage}>{"<"}</button>
+                            {Array.from({ length: totalPages }, (_, index) => (
+                                <button
+                                    style={{
+                                        backgroundColor: '#f0f6ff',
+                                        color: 'black',
+                                        ...(currentPage === index + 1 ? {
+                                            border: '1px solid blue'
+
+                                        } : {
+                                            border: '1px solid #f0f6ff'
+                                        })
+                                    }} key={index}
+                                    onClick={() => handlePageChange(index + 1)}
+                                    className={`px-2 py-1 bg-transparent`}
+                                >
+                                    {index + 1}
+                                </button>
+                            ))}
+                            <button className="bg-transparent" onClick={handleNextPage} disabled={currentPage === totalPages}>{">"}</button>
+                        </div>
+                    </div> */}
+
                 </div>
             </div>
         </>
