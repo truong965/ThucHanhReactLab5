@@ -1,0 +1,18 @@
+/* Tailwind CSS or your custom styles */
+/* Lab_05.css */
+
+/* General styling for NavLink */
+.nav-link {
+  text-decoration: none;
+  color: black;  /* Default text color */
+  padding: 10px;
+  border-radius: 5px;
+  text-align: left;
+  text-indent: 15px;
+}
+
+/* Active link styling */
+.nav-link.active {
+  background-color: pink;  /* Pink background */
+  color: white;  /* White text */
+}
