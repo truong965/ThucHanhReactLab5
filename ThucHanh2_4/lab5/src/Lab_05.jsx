@@ -185,7 +185,7 @@ const Dashboard = () => {
                         <span className="ms-3 me-auto font-bold text-2xl">Detail report</span>
                         <button className="bg-white! border-4! border-red-200! flex items-center gap-2 px-3 py-1 rounded me-2"><img src="../src/FEData/Download.png" alt="err" onClick={openModal} /> Import</button>
                         <button className="bg-white! border-4! border-red-200!  flex items-center gap-2 px-3 py-1 rounded"><img src="../src/FEData/Move up.png" alt="err" /> Export</button>
-                        {/* <CustomerModal isOpen={isModalOpen} onClose={closeModal} onSubmit={handleFormSubmit} data={selectedCutomer} /> */}
+                        <CustomerModal isOpen={isModalOpen} onClose={closeModal} onSubmit={handleFormSubmit} data={selectedCutomer} />
                     </div>
                     <div className="overflow-x-auto p-4">
                         <table className="min-w-full border rounded-lg overflow-hidden">

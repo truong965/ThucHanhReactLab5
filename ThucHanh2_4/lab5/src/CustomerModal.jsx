@@ -80,9 +80,9 @@ const CustomerModal = ({ isOpen, onClose, onSubmit, data }) => {
   }
     , [data, isOpen]); // Update when data or isOpen changes
   return (
-    <div className="p-4">
+    <div className="">
       {
-        isOpen && (<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        isOpen && (<div className="fixed inset-0 bg-black/50! flex items-center justify-center p-4">
           <div className="bg-white rounded-lg p-6 w-full max-w-lg">
             <div className="flex justify-between items-start mb-4">
               <h2 className="m-3 text-x font-semibold">Customer Information</h2>
@@ -165,7 +165,7 @@ const CustomerModal = ({ isOpen, onClose, onSubmit, data }) => {
               <button
                 type="button"
                 onClick={handleSubmit}
-                className="w-full text-white py-2 rounded bg-blue-500 hover:bg-blue-600 mt-4">
+                className="w-full text-white py-2 rounded bg-blue-500! hover:bg-blue-600! mt-4">
                 Save Customer
               </button>
             </div>
