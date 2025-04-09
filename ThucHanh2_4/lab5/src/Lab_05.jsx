@@ -231,7 +231,7 @@ const Dashboard = () => {
                             </tbody>
                         </table>
                     </div>
-                    {/* <div className="flex justify-content-center align-items-center gap-2 mt-2">
+                    <div className="flex justify-content-center align-items-center gap-2 mt-2">
                         <span className="ms-3 me-auto">Total result: {customers.length}</span>
                         <div className="flex justify-content-center align-items-center gap-2 mt-2">
                             <button className="bg-transparent" onClick={handlePrevPage} disabled={currentPage === firstIndexOfPage}>{"<"}</button>
@@ -255,7 +255,7 @@ const Dashboard = () => {
                             ))}
                             <button className="bg-transparent" onClick={handleNextPage} disabled={currentPage === totalPages}>{">"}</button>
                         </div>
-                    </div> */}
+                    </div>
 
                 </div>
             </div>
