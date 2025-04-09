@@ -6,7 +6,7 @@ import axios from "axios";
 const Lab_05 = () => {
     return (
         <div className="grid grid-rows3 grid-cols-4 gap-2">
-            <div className="row-span-3 col-span-1 border border-2">
+            <div className="row-span-3 col-span-1">
                 <div className="grid grid-cols-1 gap-2">
                     <img src="../src/FEData/logo2.png" alt="error" />
                     <NavLink to="/dashboard" className="nav-link" >Dashboar</NavLink>
@@ -18,9 +18,8 @@ const Lab_05 = () => {
                     <div style={{ backgroundColor: "#f0f6ff" }} className="flex flex-col justify-content-center align-items-center">
                         <img src="../src/FEData/v2.png" alt="error" />
                         <h2>V2.0 is available</h2>
-                        <div className="border-2 border-blue-500 w-50 rounded">
-                            <button className="w-full text-blue-500 bg-transparent py-2  " >try now</button>
-                        </div>
+                        <button className="self-center w-50 rounded text-blue-500 bg-white! my-2  border-2 border-blue-500! " >try now</button>
+
                     </div>
                 </div>
             </div>
@@ -161,15 +160,28 @@ const Dashboard = () => {
     return (
         <>
             <div>
-                <div className="border boder-2">
-                    <h1>dashboard</h1>
+                <div className="mb-3">
+                    <div>
+                        <div className="flex items-center mt-2">
+                            <h3 className="flex-1 text-left text-pink-500 ms-3">Dashboard</h3>
+                            <div className="flex-1">
+                                <input
+                                    type="text"
+                                    placeholder="search"
+                                    className="px-2 border border-black rounded bg-gray-50 w-full" />
+                            </div>
+                            <img className="mx-3" src="../src/FEData/notifi.png" alt="error" />
+                            <img className="mx-3" src="../src/FEData/question.png" alt="error" />
+                            <img className="mx-3" src="../src/FEData/small_user_img.png" alt="error" />
+                        </div>
+                    </div>
                 </div>
                 <hr />
-                <div className="border boder-2 my-5">
-                    <h1>overview</h1>
+                <div className="my-5">
+                    <h3 className="text-pink-500 text-left ms-3">Overview</h3>
                     <div className="grid grid-cols-3 gap-2">
                         {overView.map((item, index) => (
-                            <div key={index} style={{ backgroundColor: getColorOverView(index) }} className="flex justify-between border border-2 p-3">
+                            <div key={index} style={{ backgroundColor: getColorOverView(index) }} className="flex justify-between border border-2 border-gray-200 rounded p-3">
                                 <div style={{ backgroundColor: getColorOverView(index) }} className="flex flex-col">
                                     <h6 className="text-start">{item.name}</h6>
                                     <h2 className="text-start text-2xl font-bold">{item.price}{index != 2 ? "$" : ""}</h2>
@@ -180,8 +192,8 @@ const Dashboard = () => {
                         ))}
                     </div>
                 </div>
-                <div className="mt-2 shadow-lg">
-                    <div className="flex justify-start mt-2">
+                <div className="shadow-lg">
+                    <div className="flex justify-start pt-5 ">
                         <span className="ms-3 me-auto font-bold text-2xl">Detail report</span>
                         <button className="bg-white! border-4! border-red-200! flex items-center gap-2 px-3 py-1 rounded me-2"><img src="../src/FEData/Download.png" alt="err" onClick={openModal} /> Import</button>
                         <button className="bg-white! border-4! border-red-200!  flex items-center gap-2 px-3 py-1 rounded"><img src="../src/FEData/Move up.png" alt="err" /> Export</button>
@@ -224,17 +236,17 @@ const Dashboard = () => {
                                             </span>
                                         </td>
                                         <td className="px-1 py-1">
-                                            <button className="bg-white! border border-2 border-black!" title="Edit" onClick={() => handleCustomerClick(cust)} >✏️</button>
+                                            <button className="bg-white! border border-2 border-gray-300!" title="Edit" onClick={() => handleCustomerClick(cust)} >✏️</button>
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
-                    <div className="flex justify-content-center align-items-center gap-2 mt-2">
-                        <span className="ms-3 me-auto">Total result: {customers.length}</span>
-                        <div className="flex justify-content-center align-items-center gap-2 mt-2">
-                            <button className="bg-transparent" onClick={handlePrevPage} disabled={currentPage === firstIndexOfPage}>{"<"}</button>
+                    <div className="flex justify-center items-center gap-2 mt-2 pb-3">
+                        <span className="ms-3 text-center me-auto">Total result: {customers.length}</span>
+                        <div className="flex justify-content-center align-items-center gap-2">
+                            <button className="bg-white!" onClick={handlePrevPage} disabled={currentPage === firstIndexOfPage}>{"<"}</button>
                             {Array.from({ length: totalPages }, (_, index) => (
                                 <button
                                     style={{
@@ -253,7 +265,7 @@ const Dashboard = () => {
                                     {index + 1}
                                 </button>
                             ))}
-                            <button className="bg-transparent" onClick={handleNextPage} disabled={currentPage === totalPages}>{">"}</button>
+                            <button className="bg-white!" onClick={handleNextPage} disabled={currentPage === totalPages}>{">"}</button>
                         </div>
                     </div>
 
